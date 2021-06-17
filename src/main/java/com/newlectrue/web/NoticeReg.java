@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.catalina.connector.Response;
 
-@WebServlet("/hi")
-public class Nana extends HttpServlet {
+@WebServlet("/notice-reg")
+public class NoticeReg extends HttpServlet {
 
 	@Override
 	public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -20,21 +20,14 @@ public class Nana extends HttpServlet {
 		
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
+//		request.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();
 		
-		String cnt_ = request.getParameter("cnt");
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
 		
-		int cnt = 100;
-		
-		if(cnt_ != null && !cnt_.equals(""))
-			cnt = Integer.parseInt(cnt_);
-		
-
-		
-
-		
-		for(int i=0; i<cnt; i++) 
-			out.println("안녕 서블릿 sdf <br/>");
+		out.println(title);
+		out.println(content);
 		
 				
 		

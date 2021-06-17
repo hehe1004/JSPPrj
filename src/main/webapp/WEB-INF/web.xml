@@ -13,9 +13,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
                       http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
-	version="4.0" metadata-complete="true">
+	version="4.0" metadata-complete="false">
+	
 
-	<servlet>
+
+<!-- 	<servlet>
 		<servlet-name>na</servlet-name>
 		<servlet-class>com.newlectrue.web.Nana</servlet-class>
 	</servlet>
@@ -24,7 +26,30 @@
 	<servlet-mapping>
 		<servlet-name>na</servlet-name>
 		<url-pattern>/hello</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping> -->
+
+<!-- <filter>
+	<filter-name>charaterEncodingFilter</filter-name>
+	<filter-class>com.newlectrue.web.filter.CharaterEncodingFilter</filter-class>
+	
+</filter>
+<filter-mapping>
+	<filter-name>charaterEncodingFilter</filter-name>
+	<url-pattern>/*</url-pattern>
+</filter-mapping> -->
+
+
+<!-- 	
+		<filter>
+	<filter-name>characterencodingfilter</filter-name>
+	<filter-class>com.newlectrue.web.filter.CharacterEncodingFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+	<filter-name>characterEncodingFilter</filter-name>
+	<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	 -->
 
 
 
