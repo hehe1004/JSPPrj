@@ -16,10 +16,10 @@ public class CharaterEncodingFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain cahin)
 			throws IOException, ServletException {
 		// TODO Auto-generated method stub
-		System.out.println("before filter");
+//		System.out.println("before filter");
 		request.setCharacterEncoding("UTF-8");
 		cahin.doFilter(request, response);
-		System.out.println("after filter");
+//		System.out.println("after filter");
 		
 	}
 
