@@ -1,3 +1,7 @@
+int x = 3;
+int y = s;
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,9 +29,9 @@ height:50px;
 
 <form action="calcpage" method="post">
 
-<label>입력</label>
+<label>�</label>
 <table>
-<td class="output" colspan="4">0</td>
+<td class="output" colspan="4">${3+4}</td>
 <tr>
 <td><input type="submit" name="operator" value="CE"/></td>
 <td><input type="submit" name="operator" value="C"/></td>

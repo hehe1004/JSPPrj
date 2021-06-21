@@ -65,7 +65,7 @@ public class calc3 extends HttpServlet {
 			expCookie.setMaxAge(0);
 		System.out.println("c2");
 		
-
+		expCookie.setPath("/");
 		response.addCookie(expCookie);
 		response.sendRedirect("calcpage");
 
