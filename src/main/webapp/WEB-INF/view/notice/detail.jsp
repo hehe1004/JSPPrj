@@ -1,38 +1,7 @@
-<%@page import="java.sql.Date"%>
-<%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Statement"%>
-<%@page import="java.sql.DriverManager"%>
-<%@page import="java.sql.Connection"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-    <%
-    int id = Integer.parseInt(request.getParameter("id"));
-
-		String url = "jdbc:oracle:thin:@localhost:1521/xepdb1";
-		String sql = "SELECT* FROM NOTICE WHERE ID =?";
-
-		Class.forName("oracle.jdbc.driver.OracleDriver");
-		Connection con = DriverManager.getConnection(url,"newlec","1234");
-		PreparedStatement st = con.prepareStatement(sql);
-		st.setInt(1, id);
-		ResultSet rs = st.executeQuery();
-		
-		rs.next();
-		
-
-	String title = rs.getString("TITLE");
-	Date regdate =rs.getDate("REGDATE");
-	String writerId =rs.getString("WRITER_ID") ;
-	String hit =rs.getString("HIT");
-	String files =rs.getString("FILES");
-	String content =rs.getString("CONTENT");
-    			
-    
-    rs.close();
-		st.close();
-		con.close();%>
+  
 
 							
     
@@ -186,24 +155,24 @@
 							<tbody>
 								<tr>
 									<th>제목</th>
-									<td class="text-align-left text-indent text-strong text-orange" colspan="3"><%=title %></td>
+									<td class="text-align-left text-indent text-strong text-orange" colspan="3">${n.title}</td>
 								</tr>
 								<tr>
 									<th>작성일</th>
-									<td class="text-align-left text-indent" colspan="3"><%=regdate %></td>
+									<td class="text-align-left text-indent" colspan="3">${n.regdate}</td>
 								</tr>
 								<tr>
 									<th>작성자</th>
-									<td><%=writerId%></td>
+									<td>${n.writerId}</td>
 									<th>조회수</th>
-									<td><%=hit %></td>
+									<td>${n.hit}</td>
 								</tr>
 								<tr>
 									<th>첨부파일</th>
-									<td colspan="3"><%=files%> </td>
+									<td colspan="3">${n.files}</td>
 								</tr>
 								<tr class="content">
-									<td colspan="4"><%=content%><div><br></div><div>현재 진행중인 스프링 DI 8강까지의 예제입니다.</div><div><br></div><div><a href="http://www.newlecture.com/resource/spring2.zip"><b><u><font size="5" color="#dd8a00">예제 다운로드하기</font></u></b></a></div><div><br></div><div><br></div></td>
+									<td colspan="4">${n.content}<div><br></div><div>현재 진행중인 스프링 DI 8강까지의 예제입니다.</div><div><br></div><div><a href="http://www.newlecture.com/resource/spring2.zip"><b><u><font size="5" color="#dd8a00">예제 다운로드하기</font></u></b></a></div><div><br></div><div><br></div></td>
 								</tr>
 							</tbody>
 						</table>
