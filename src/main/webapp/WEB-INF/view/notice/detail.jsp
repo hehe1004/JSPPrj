@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-  
-
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+  <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+  <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 							
-    
     
 <!DOCTYPE html>
 <html>
@@ -159,17 +158,30 @@
 								</tr>
 								<tr>
 									<th>작성일</th>
-									<td class="text-align-left text-indent" colspan="3">${n.regdate}</td>
+									<td class="text-align-left text-indent" colspan="3">	<td><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${n.regdate}"/></td></td>
 								</tr>
 								<tr>
 									<th>작성자</th>
 									<td>${n.writerId}</td>
 									<th>조회수</th>
-									<td>${n.hit}</td>
+									<td><fmt:formatNumber type="number" pattern="#,##" value="${n.hit}"></fmt:formatNumber>
+									
 								</tr>
 								<tr>
 									<th>첨부파일</th>
-									<td colspan="3">${n.files}</td>
+									<td colspan="3"style="text-align:left" >
+									<c:forTokens var="fileName" items="${n.files}" delims="," varStatus="st">
+										<c:set var="style" value=""></c:set>
+										<c:if test="${fn:endsWith(fileName, '.zip') }">
+											<c:set var="style" value="font-weight: bold; color:red;"></c:set>
+										</c:if>
+										<a href="${fileName }" style="${style}">${fn:toUpperCase(fileName)  }</a>
+										<c:if test="${!st.last }">
+										/
+										</c:if>
+									</c:forTokens>
+									
+									</td>
 								</tr>
 								<tr class="content">
 									<td colspan="4">${n.content}<div><br></div><div>현재 진행중인 스프링 DI 8강까지의 예제입니다.</div><div><br></div><div><a href="http://www.newlecture.com/resource/spring2.zip"><b><u><font size="5" color="#dd8a00">예제 다운로드하기</font></u></b></a></div><div><br></div><div><br></div></td>
@@ -179,7 +191,7 @@
 					</div>
 					
 					<div class="margin-top text-align-center">
-						<a class="btn btn-list" href="list.jsp">목록</a>
+						<a class="btn btn-list" href="list">목록</a>
 					</div>
 					
 					<div class="margin-top">
