@@ -1,6 +1,19 @@
 package com.newlectrue.web.service;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.newlectrue.web.entity.Notice;
 
@@ -17,12 +30,64 @@ public class NoticeService {
 
 	}
 
-	public List<Notice> getNoticeList(String field, String query, int page) {
+	public List<Notice> getNoticeList(String field/*TITLE,WRITER_ID*/, String query/*A*/, int page) {
+		
+		List<Notice> list = new ArrayList<>();
+
 			String sql = "select * from("
-					+ "select rownum num, N.* "
-					+ "from (select * from notice order by regdate desc) N)"
-					+ "where num between 2 and 4";
-		return null;
+					+ "select ROWNUM NUM, N.* "
+					+ "from (select * from NOTICE where "+field+" LIKE ? order by REGDATE DESC) N"
+					+ ")"
+					+ "where num between ? and ?";
+			//1,11,21,31, -> an = 1+(page-a)*10
+			//10,20,30,40 -> page*10
+			
+
+				String url = "jdbc:oracle:thin:@localhost:1521/xepdb1";
+
+			
+				
+				try {
+					Class.forName("oracle.jdbc.driver.OracleDriver");
+					Connection con = DriverManager.getConnection(url, "newlec", "1234");
+					
+					PreparedStatement st = con.prepareStatement(sql);
+					st.setString(1, "%"+query+"%");
+					st.setInt(2, 1+(page-1)*10);
+					st.setInt(3, page*10);
+					
+//					Statement st = con.createStatement();
+					ResultSet rs = st.executeQuery();
+					
+					
+					while (rs.next()) {
+						int id = rs.getInt("ID");
+						String title = rs.getString("TITLE");
+						Date regdate = rs.getDate("REGDATE");
+						String writerId = rs.getString("WRITER_ID");
+						String hit = rs.getString("HIT");
+						String files = rs.getString("FILES");
+						String content = rs.getString("CONTENT");
+
+						Notice notice = new Notice(id, title, regdate, writerId, hit, files, content);
+
+						list.add(notice);
+					}
+
+					rs.close();
+					st.close();
+					con.close();
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					
+				}
+
+		return list;
 
 	}
 
@@ -39,7 +104,7 @@ public class NoticeService {
 	}
 
 	public Notice getNotice(int id) {
-			String sql = "select * from notice where id =?"
+			String sql = "select * from notice where id =?";
 		return null;
 	}
 
