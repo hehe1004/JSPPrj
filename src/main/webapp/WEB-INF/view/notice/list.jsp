@@ -162,11 +162,15 @@
 						<legend class="hidden">공지사항 검색 필드</legend>
 						<label class="hidden">검색분류</label>
 						<select name="f">
-							<option  value="title">제목</option>
-							<option  value="writerId">작성자</option>
+							
+							
+							<option  ${(param.f == "title")?"selected":""} value="title">제목</option>
+							
+							<option  ${(param.f == "writer_id")?"selected":""} value="writer_id">작성자</option>
+							
 						</select> 
 						<label class="hidden">검색어</label>
-						<input type="text" name="q" value=""/>
+						<input type="text" name="q" value="${param.q}"/>
 						<input class="btn btn-search" type="submit" value="검색" />
 					</fieldset>
 				</form>
@@ -233,7 +237,7 @@
 	</div>
 	<ul class="-list- center">
 	<c:forEach var="i" begin="0" end="4">
-		<li><a class="-text- orange bold" href="?p=${startNum+i}&t=&q=" >${startNum+i}</a></li>
+		<li><a class="-text- orange bold" href="?p=${startNum+i}&f=${param.f}&q=${param.q}" >${startNum+i}</a></li>
 				</c:forEach>	
 	</ul>
 	<div>
