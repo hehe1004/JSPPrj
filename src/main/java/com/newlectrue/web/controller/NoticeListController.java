@@ -30,15 +30,18 @@ public class NoticeListController extends HttpServlet {
 		
 		String field_ = request.getParameter("f");
 		String query_ =request.getParameter("q");
-		String page_= request.getParameter("p");
+		String page_ = request.getParameter("p");
 		
+		System.out.println(field_);
+		System.out.println(query_);
+		System.out.println(page_);
 		
 		String field = "title";
 		if(field_ !=null && !field.equals(""))
 			field = field_;
 		
 		String query = "";
-		if(query_ !=null && !query.equals(""))
+		if(query_ !=null && !field.equals(""))
 			query = query_;
 		
 		int page = 1;
@@ -49,11 +52,13 @@ public class NoticeListController extends HttpServlet {
 		NoticeService service = new NoticeService();
 		List<Notice> list = service.getNoticeList(field,query,page);
 	
+		int count = service.getNoticeCount(field,query);
 		
 		//redirect
 		//그냥 바로 다른페이지로 가기 
 		
 		request.setAttribute("list", list);
+		request.setAttribute("count", count);
 		
 		//forward
 		//작업내용 이어받아서
