@@ -37,15 +37,15 @@ public class NoticeListController extends HttpServlet {
 		System.out.println(page_);
 		
 		String field = "title";
-		if(field_ !=null && !field.equals(""))
+		if(field_ !=null && !field_.equals(""))
 			field = field_;
 		
 		String query = "";
-		if(query_ !=null && !field.equals(""))
+		if(query_ !=null && !query_.equals(""))
 			query = query_;
 		
 		int page = 1;
-		if(page_ !=null)
+		if(page_ !=null&& !page_.equals(""))
 			page =Integer.parseInt(page_);
 		
 		
