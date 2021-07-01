@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.newlectrue.web.entity.Notice;
+import com.newlectrue.web.service.NoticeService;
 
 @WebServlet("/notice/detail")
 public class NoticeDetailController extends HttpServlet {
@@ -25,65 +26,12 @@ public class NoticeDetailController extends HttpServlet {
 			throws ServletException, IOException {
 
 		int id = Integer.parseInt(request.getParameter("id"));
-
-		String url = "jdbc:oracle:thin:@localhost:1521/xepdb1";
-		String sql = "SELECT* FROM NOTICE WHERE ID =?";
-
-		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			Connection con = DriverManager.getConnection(url, "newlec", "1234");
-			PreparedStatement st = con.prepareStatement(sql);
-			st.setInt(1, id);
-			ResultSet rs = st.executeQuery();
-
-			rs.next();
-
-			String title = rs.getString("TITLE");
-			Date regdate = rs.getDate("REGDATE");
-			String writerId = rs.getString("WRITER_ID");
-			String hit = rs.getString("HIT");
-			String files = rs.getString("FILES");
-			String content = rs.getString("CONTENT");
-
-			
-			
-			Notice notice = new Notice(
-					id,
-					title,
-					regdate,
-					writerId,
-					hit,
-					files,
-					content
-					);
-			
-			request.setAttribute("n", notice);
-			
-//			request.setAttribute("title", title);
-//			request.setAttribute("regdate", regdate);
-//			request.setAttribute("writerId", writerId);
-//			request.setAttribute("hit", hit);
-//			request.setAttribute("files", files);
-//			request.setAttribute("content", content);
-			
-			
-			rs.close();
-			st.close();
-			con.close();
+		System.out.println("notice detail1");
+		NoticeService service = new NoticeService();
+		Notice notice = service.getNotice(id);
+		request.setAttribute("n", notice);
 		
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		//redirect
-		//그냥 바로 다른페이지로 가기 
-		
-		
-		
+		System.out.println("notice detail2");
 		//forward
 		//작업내용 이어받아서
 		request.getRequestDispatcher("/WEB-INF/view/notice/detail.jsp").forward(request, response);

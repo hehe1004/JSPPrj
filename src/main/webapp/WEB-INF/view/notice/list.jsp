@@ -201,7 +201,7 @@
 							<c:forEach var="n" items="${list}">
 					<tr>
 						<td>${n.id }</td>
-						<td class="title indent text-align-left"><a href="detail?id=${n.id }">${n.title }</a></td>
+						<td class="title indent text-align-left"><a href="detail?id=${n.id }">${n.title }</a><span>[3]</span></td>
 						<td>${n.writerId }</td>
 					<td><fmt:formatDate pattern="yyyy-MM-dd" value="${n.regdate}"/></td>
 						<td>${n.hit }</td>
