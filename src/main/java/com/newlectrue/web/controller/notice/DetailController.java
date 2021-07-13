@@ -1,4 +1,4 @@
-package com.newlectrue.web.controller;
+package com.newlectrue.web.controller.notice;
 
 import java.io.IOException;
 import java.lang.ProcessBuilder.Redirect;
@@ -19,7 +19,7 @@ import com.newlectrue.web.entity.Notice;
 import com.newlectrue.web.service.NoticeService;
 
 @WebServlet("/notice/detail")
-public class NoticeDetailController extends HttpServlet {
+public class DetailController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

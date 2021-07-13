@@ -1,4 +1,5 @@
-package com.newlectrue.web.controller;
+package com.newlectrue.web.controller.admin.notice;
+
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -17,11 +18,35 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.newlectrue.web.entity.Notice;
+import com.newlectrue.web.entity.NoticeView;
 import com.newlectrue.web.service.NoticeService;
 
-@WebServlet("/notice/list")
-public class NoticeListController extends HttpServlet {
+@WebServlet("/admin/notice/list")
+public class ListController extends HttpServlet {
 
+	
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+		
+		String[] openIds = request.getParameterValues("open-id");
+		String[] delIds = request.getParameterValues("del-id");
+		String cmd = request.getParameter("cmd");
+		
+	
+	switch(cmd) {
+	case "일괄공개":
+		for(String openId : openIds)
+			System.out.printf("open id = %s\n", openId);
+		break;
+	case "일괄삭제":
+		for(String delId : delIds)
+			System.out.printf("del id = %s\n", delId);
+		break;
+	}
+}
+	
+	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -50,7 +75,7 @@ public class NoticeListController extends HttpServlet {
 		
 		
 		NoticeService service = new NoticeService();
-		List<Notice> list = service.getNoticeList(field,query,page);
+		List<NoticeView> list = service.getNoticeList(field,query,page);
 	
 		int count = service.getNoticeCount(field,query);
 		
@@ -63,7 +88,7 @@ public class NoticeListController extends HttpServlet {
 		//forward
 		//작업내용 이어받아서
 		request
-		.getRequestDispatcher("/WEB-INF/view/notice/list.jsp")
+		.getRequestDispatcher("/WEB-INF/view/admin/board/notice/list.jsp")
 		.forward(request, response);
 		
 		

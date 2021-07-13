@@ -16,27 +16,71 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.newlectrue.web.entity.Notice;
+import com.newlectrue.web.entity.NoticeView;
 
 public class NoticeService {
-	public List<Notice> getNoticeList() {
+	
+	public int removeNoticeAll(int[] ids){
+		
+		return 0;
+		
+	}
+	public int pubNoticeAll(int[] ids){
+		
+		return 0;
+		
+		
+		
+	}
+	public int insertNotice(Notice notice){
+		return 0;
+	}
+	
+	public int deleteNotice(int id){
+		return 0;
+	}
+	
+	public int updateNotice(Notice notice){
+		return 0;
+		
+	}
+	List<Notice> getNoticeNewestList(){
+		
+		return null;
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public List<NoticeView> getNoticeList() {
 
 		return getNoticeList("title", "", 1);
 
 	}
 
-	public List<Notice> getNoticeList(int page) {
+	public List<NoticeView> getNoticeList(int page) {
 
 		return getNoticeList("title", "", page);
 
 	}
 
-	public List<Notice> getNoticeList(String field/*TITLE,WRITER_ID*/, String query/*A*/, int page) {
+	public List<NoticeView> getNoticeList(String field/*TITLE,WRITER_ID*/, String query/*A*/, int page) {
 		
-		List<Notice> list = new ArrayList<>();
+		List<NoticeView> list = new ArrayList<>();
 
 			String sql = "select * from("
 					+ "select ROWNUM NUM, N.* "
-					+ "from (select * from NOTICE where "+field+" LIKE ? order by REGDATE DESC) N"
+					+ "from (select * from NOTICE_VIEW where "+field+" LIKE ? order by REGDATE DESC) N"
 					+ ")"
 					+ "where num between ? and ?";
 			//1,11,21,31, -> an = 1+(page-a)*10
@@ -67,9 +111,12 @@ public class NoticeService {
 						String writerId = rs.getString("WRITER_ID");
 						String hit = rs.getString("HIT");
 						String files = rs.getString("FILES");
-						String content = rs.getString("CONTENT");
-
-						Notice notice = new Notice(id, title, regdate, writerId, hit, files, content);
+//						String content = rs.getString("CONTENT");
+						int cmtCount = rs.getInt("CMT_COUNT");
+						
+						NoticeView notice = new NoticeView(id, title, regdate, writerId, hit, files, 
+//								content,
+								cmtCount);
 
 						list.add(notice);
 					}
