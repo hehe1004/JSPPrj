@@ -33,6 +33,8 @@ public class ListController extends HttpServlet {
 		String query_ =request.getParameter("q");
 		String page_ = request.getParameter("p");
 		
+		
+		
 		System.out.println(field_);
 		System.out.println(query_);
 		System.out.println(page_);
@@ -49,9 +51,15 @@ public class ListController extends HttpServlet {
 		if(page_ !=null&& !page_.equals(""))
 			page =Integer.parseInt(page_);
 		
+		System.out.println("-------------------------------");
+		System.out.println("-------------------------------");
+		System.out.println(field);
+		System.out.println(query);
+		System.out.println(page);
+		System.out.println("-------------------------------");	
 		
 		NoticeService service = new NoticeService();
-		List<NoticeView> list = service.getNoticeList(field,query,page);
+		List<NoticeView> list = service.getNoticePubList(field,query,page);
 	
 		int count = service.getNoticeCount(field,query);
 		

@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -21,7 +22,7 @@ import com.newlectrue.web.entity.Notice;
 import com.newlectrue.web.entity.NoticeView;
 import com.newlectrue.web.service.NoticeService;
 
-@WebServlet("/admin/notice/list")
+@WebServlet("/admin/board/notice/list")
 public class ListController extends HttpServlet {
 
 	
@@ -32,18 +33,60 @@ public class ListController extends HttpServlet {
 		String[] openIds = request.getParameterValues("open-id");
 		String[] delIds = request.getParameterValues("del-id");
 		String cmd = request.getParameter("cmd");
+		String ids_ = request.getParameter("ids");
+		String[] ids = ids_.trim().split(" ");//1,2,3,4,5,6,7,8,9,10
+	
+		
+		NoticeService service = new NoticeService();
+		
+		
+		switch(cmd) {
+		case "일괄공개":
+			for(String openId : openIds)
+				System.out.printf("open id = %s\n", openId);
+			
+			
+			List<String> oids = Arrays.asList(openIds);
+			//1,2,3,4,5,6,7,8,9,10 - //3,5,8
+			//1,2,4,6,7,9,10
+		
+			List<String> cids = new ArrayList(Arrays.asList(ids));
+			
+			
+			cids.removeAll(oids);
+			
+			
+			System.out.println(Arrays.asList(ids));
+			System.out.println(oids);
+			System.out.println(cids);
+			
+			//pub 
+//			for(int i=0; i<ids.length; i++) {
+//				
+//				if(oids.contains(ids[i]))
+//					
+//				else
+					
+			
+			service.pubNoticeAll(oids,cids);
+//			service.getNoticePubList(clsIds);
+			
+			break;
+			
+		case "일괄삭제":
 		
 	
-	switch(cmd) {
-	case "일괄공개":
-		for(String openId : openIds)
-			System.out.printf("open id = %s\n", openId);
-		break;
-	case "일괄삭제":
-		for(String delId : delIds)
-			System.out.printf("del id = %s\n", delId);
+		
+		int[] ids1 = new int[delIds.length];
+		for(int i=0; i<delIds.length; i++)
+			ids1[i] =  Integer.parseInt(delIds[i]);
+		
+		int result = service.deleteNoticeAll(ids1);
+		
 		break;
 	}
+	
+	response.sendRedirect("list");
 }
 	
 	
@@ -57,9 +100,9 @@ public class ListController extends HttpServlet {
 		String query_ =request.getParameter("q");
 		String page_ = request.getParameter("p");
 		
-		System.out.println(field_);
-		System.out.println(query_);
-		System.out.println(page_);
+//		System.out.println(field_);
+//		System.out.println(query_);
+//		System.out.println(page_);
 		
 		String field = "title";
 		if(field_ !=null && !field_.equals(""))
